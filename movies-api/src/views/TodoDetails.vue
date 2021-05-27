@@ -21,10 +21,10 @@
 
           <tbody>
             <tr v-if="todo">
-              <td>{{ todo.id }}</td>
-              <td>{{ todo.user_id }}</td>
-              <td>{{ todo.title }}</td>
-              <td>
+              <td class="align-middle">{{ todo.id }}</td>
+              <td class="align-middle">{{ todo.user_id }}</td>
+              <td class="align-middle">{{ todo.title }}</td>
+              <td class="align-middle">
                 <i
                   v-if="todo.completed"
                   class="fas fa-check text-success">
@@ -36,10 +36,10 @@
                 </i>
               </td>
 
-              <td>{{ formatDate(todo.created_at) }}</td>
-              <td>{{ formatDate(todo.updated_at) }}</td>
+              <td class="align-middle">{{ formatDate(todo.created_at) }}</td>
+              <td class="align-middle">{{ formatDate(todo.updated_at) }}</td>
 
-              <td>
+              <td class="align-middle">
                 <button
                   @click="openEditTodoModal()"
                   type="button"
@@ -92,7 +92,7 @@
           </div>
 
           <div>
-            Status: {{ user.status }}
+            Status: <span :style="statusStyle">{{ user.status }}</span>
           </div>
         </div>
       </div>
@@ -211,6 +211,25 @@ export default {
 
         return 'fas fa-male'
       }
+    },
+
+    statusStyle () {
+      if (!this.user) {
+        return ''
+      }
+
+      let styleObject = {
+        'font-weight': '600'
+      }
+
+      if (this.user.status === 'Active') {
+        styleObject.color = '#3ab73a'
+
+      } else {
+        styleObject = styleObject.color = '#ff4040'
+      }
+
+      return styleObject
     }
   },
 
