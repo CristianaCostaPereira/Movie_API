@@ -41,15 +41,16 @@
 
               <td>
                 <button
-                  @click="openEditTodoModal(todo)"
+                  @click="openEditTodoModal()"
                   type="button"
-                  class="btn btn-outline-primary custom-button">
+                  class="btn btn-outline-primary custom-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#todoModal">
 
                   <i
                     class="fas fa-pencil-alt">
                   </i>
                 </button>
-
 
                 <button
                   @click="removeTodo()"
@@ -65,6 +66,98 @@
           </tbody>
         </table>
       </div>
+
+      <pre v-if="user">
+        {{ user.name }}
+
+        {{ user.created_at }}
+        {{ user.email }}
+        {{ user.gender }}
+        {{ user.id }}
+        {{ user.name }}
+        {{ user.status }}
+        {{ user.updated_at }}
+
+      </pre>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="todoModal"
+      tabindex="-1"
+      aria-labelledby="todoModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5
+              class="modal-title">
+              TODO
+            </h5>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-toggle="modal"
+              data-bs-target="#todoModal"
+              aria-label="Close">
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form v-if="todo">
+              <div class="form-group mt-4">
+                <label>ID do Utilizador</label>
+
+                <input
+                  v-model="editDetailTodo.userId"
+                  type="text"
+                  class="form-control"
+                  placeholder="ID do Utilizador" />
+              </div>
+
+              <div class="form-group mt-4">
+                <label>Descrição</label>
+
+                <input
+                  v-model="editDetailTodo.title"
+                  type="text"
+                  class="form-control"
+                  placeholder="Descrição" />
+              </div>
+
+              <div class="form-check mt-4">
+                <label>Realizada</label>
+
+                <input
+                  v-model="editDetailTodo.completed"
+                  type="checkbox"
+                  class="form-check-input" />
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#todoModal"
+              @click="editTodo()">
+              Gravar
+            </button>
+            
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#todoModal">
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -78,24 +171,83 @@ export default {
   data () {
     return {
       id: this.$route.params.todoId,
-      todo: null // What  we get from the server
+      todo: null, // What we get from the server
+      user: null,
+
+      editDetailTodo: {
+        userId: null,
+        title: null,
+        completed: false
+      }
     }
   },
 
   methods: {
     getTodo () {
       this.axios.get('https://gorest.co.in/public-api/todos/' + this.id).then((response) => {
+        
+        if (response.data.code !== 200) {
+          alert('Erro ao carregar a tarefa!')
+          return
+        }
         this.todo = response.data.data
+        this.getUser(response.data.data.user_id)
+      })
+    },
+
+    getUser (userId) {
+      this.axios.get('https://gorest.co.in/public-api/users/' + userId).then((response) => {
+        if (response.data.code !== 200) {
+          alert('Erro ao carregar detalhes do utilizador!')
+          return
+        }
+
+        this.user = response.data.data
       })
     },
 
     formatDate (date) {
+      if (!date) {
+        return
+      }
       var splitedDate = date.split('.')[0]
 
       return moment(splitedDate, 'YYYY-MM-DDTHH:mm:ss').format('DD/MM/YYYY HH:mm:ss') // O formato da data que a API trás e o formato que quero
     },
 
-     removeTodo () {
+    editTodo () {
+      let apiTodo = {
+        user_id: this.editDetailTodo.userId,
+        title: this.editDetailTodo.title,
+        completed: this.editDetailTodo.completed
+      }
+
+      let headers = { 
+        headers: { 
+          Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
+        }
+      }
+
+      this.axios.put(
+        'https://gorest.co.in/public-api/todos/' + this.id,
+        apiTodo, 
+        headers
+      ).then((response) => {
+        if (response.data.code === 200) {
+          this.getTodo()
+        } else {
+          alert('Erro ao editar a tarefa!')
+        }
+      })
+    },
+
+    openEditTodoModal() {
+      this.editDetailTodo.userId = this.todo.user_id
+      this.editDetailTodo.title = this.todo.title,
+      this.editDetailTodo.completed = this.todo.completed
+    },
+
+    removeTodo () {
       // don't need to pass an argument because I have scope using this.id that we get from our route/URL
 
       this.axios.delete('https://gorest.co.in/public-api/todos/' + this.id,
@@ -111,11 +263,15 @@ export default {
           alert(response.data.data.message)
         }
       })
-    },
+    }
+
+
   },
 
   created () {
     this.getTodo()
+
+    // com o id do user devolvido do pedido getTodo, vamos buscar mais informação do utilizador
   }
 }
 </script>
