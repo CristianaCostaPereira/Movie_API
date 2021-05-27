@@ -40,10 +40,20 @@
               :key="todo.id">
               <td>{{ todo.id }}</td>
               <td>{{ todo.user_id }}</td>
-              <td>{{todo.title}}</td>
-              <td>{{todo.completed}}</td>
-              <td>{{todo.completed_at}}</td>
-              <td>{{todo.updated_at}}</td>
+              <td>{{ todo.title }}</td>
+              <td>
+                <i
+                  v-if="todo.completed"
+                  class="fas fa-check text-success">
+                </i>
+
+                <i
+                  v-else
+                  class="fas fa-times text-danger">
+                </i>
+              </td>
+              <td>{{ todo.created_at }}</td>
+              <td>{{ todo.updated_at }}</td>
             </tr>
           </tbody>
         </table>
