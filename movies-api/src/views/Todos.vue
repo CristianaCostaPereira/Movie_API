@@ -91,6 +91,18 @@ export default {
     hasTodos () {
       return this.todos.length < 0
     }
+  },
+
+  methods: {
+    getTodos () {
+      this.axios.get("https://gorest.co.in/public-api/todos").then((response) => {
+        console.log(response.data)
+      })
+    }
+  },
+
+  created () {
+    this.getTodos()
   }
 }
 </script>
