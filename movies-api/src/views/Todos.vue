@@ -5,7 +5,9 @@
       <div class="col-lg-6">
         <button
           type="button"
-          class="btn btn-outline-primary">
+          class="btn btn-outline-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#todoModal">
 
           Criar tarefa
         </button>
@@ -38,10 +40,29 @@
           <div class="modal-body">
             <form>
               <div class="form-group mt-4">
+                <label>ID do Utilizador</label>
+                <input
+                v-model="maintenanceTodo.userId"
+                  type="text"
+                  class="form-control"
+                  placeholder="ID do Utilizador" />
+              </div>
+
+              <div class="form-group mt-4">
                 <label>Descrição</label>
                 <input
-                  type="date"
+                  v-model="maintenanceTodo.title"
+                  type="text"
                   class="form-control"
+                  placeholder="Descrição" />
+              </div>
+
+              <div class="form-group mt-4">
+                <label>Realizada</label>
+                <input
+                v-model="maintenanceTodo.completed"
+                  type="checkbox"
+                  class="form-check.input"
                   placeholder="Descrição" />
               </div>
             </form>
@@ -240,6 +261,28 @@ export default {
           alert(response.data.data.message)
         }
       })
+    },
+
+    addTodo() {
+      let apiTodo = {
+        userid: this.maintenanceTodo.userId,
+        title: this.maintenanceTodo.title,
+        completed: this.maintenanceTodo.completed
+      }
+
+      this.axios.delete('https://gorest.co.in/public-api/todos/', apiTodo,
+      {
+        headers: {
+          Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
+        }
+      }).then((response) => {
+        if (response.data.code === 201) {
+          this.getTodos()
+        } else {
+          alert(response.data.data.message)
+        }
+      })
+
     },
 
     formatDate (date) {
