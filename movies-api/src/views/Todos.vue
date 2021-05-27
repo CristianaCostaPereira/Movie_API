@@ -271,7 +271,7 @@ export default {
     },
 
     removeTodo (todoId) {
-      // delete recives, as second parameter the headers
+      // delete receive, as second parameter, the headers
 
       this.axios.delete('https://gorest.co.in/public-api/todos/' + todoId,
       {
