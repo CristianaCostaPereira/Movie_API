@@ -89,14 +89,14 @@ export default {
 
   computed: {
     hasTodos () {
-      return this.todos.length < 0
+      return this.todos.length > 0
     }
   },
 
   methods: {
     getTodos () {
       this.axios.get("https://gorest.co.in/public-api/todos").then((response) => {
-        console.log(response.data)
+        this.todos = response.data.data // Place the answer from our API into our array
       })
     }
   },
