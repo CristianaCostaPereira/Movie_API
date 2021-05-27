@@ -19,9 +19,11 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">ID do Utilizador</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Criado a</th>
+              <th scope="col">Actualizado a</th>
             </tr>
           </thead>
 
@@ -31,18 +33,8 @@
               <td>Mark</td>
               <td>Otto</td>
               <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
             </tr>
           </tbody>
         </table>
@@ -60,3 +52,27 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Todos',
+
+  data () {
+    return {
+      maintenanceTodo : {
+        id: null,
+        userId: null,
+        title: '',
+        completed: false
+      }
+
+    }
+  }
+}
+</script>
+
+<style>
+  .pagination {
+    justify-content: center;
+  }
+</style>
