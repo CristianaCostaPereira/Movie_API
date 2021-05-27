@@ -63,9 +63,36 @@
     <div class="row mt-4">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Página Anterior</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">Página Seguinte</a></li>
+          <li class="page-item">
+            <a
+              @click.prevent="previousPage()"
+              class="page-link"
+              :class="{'disabled': pagination.page == 1}"
+              href="#">
+
+              Página Anterior
+            </a>
+          </li>
+
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="#">
+
+              {{pagination.page}}
+            </a>
+          </li>
+
+          <li class="page-item">
+            <a
+              @click.prevent="nextPage()"
+              :class="{'disabled': pagination.page == pagination.pages}"
+              class="page-link"
+              href="#">
+
+              Página Seguinte
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -110,6 +137,7 @@ export default {
     getTodos () {
       this.axios.get('https://gorest.co.in/public-api/todos?page=' + this.pagination.page).then((response) => {
         this.todos = response.data.data // Place the answer from our API into our array
+        this.pagination = response.data.meta.pagination
       })
     },
 
@@ -117,6 +145,23 @@ export default {
       var splitedDate = date.split('.')[0]
 
       return moment(splitedDate, 'YYYY-MM-DDTHH:mm:ss').format('DD/MM/YYYY HH:mm:ss') // O formato da data que a API trás e o formato que quero
+    },
+
+    previousPage() {
+      if (this.pagination.page > 1) {
+        this.pagination.page -=1
+      }
+
+      this.getTodos()
+
+    },
+
+    nextPage() {
+      if (this.pagination.page < this.pagination.pages) {
+        this.pagination.page++
+      }
+
+      this.getTodos()
     }
   },
 
@@ -129,5 +174,13 @@ export default {
 <style>
   .pagination {
     justify-content: center;
+  }
+
+  .disabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+
   }
 </style>
