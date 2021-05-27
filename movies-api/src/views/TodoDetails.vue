@@ -67,18 +67,35 @@
         </table>
       </div>
 
-      <pre v-if="user">
-        {{ user.name }}
+      <div
+        class="card"
+        v-if="user">
 
-        {{ user.created_at }}
-        {{ user.email }}
-        {{ user.gender }}
-        {{ user.id }}
-        {{ user.name }}
-        {{ user.status }}
-        {{ user.updated_at }}
+        <div class="card-body">
+          <div>
+            {{ user.id }} - {{ user.name }}
 
-      </pre>
+            <i :class="genderClass"></i>
+          </div>
+
+          <div>
+            {{ user.email }}
+          </div>
+
+          <div>
+            Criado a: {{ formatDate(user.created_at) }}
+          </div>
+
+
+          <div>
+            Actualizado a: {{ formatDate(user.updated_at) }}
+          </div>
+
+          <div>
+            Status: {{ user.status }}
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Modal -->
@@ -147,7 +164,7 @@
               @click="editTodo()">
               Gravar
             </button>
-            
+
             <button
               type="button"
               class="btn btn-secondary"
@@ -182,10 +199,25 @@ export default {
     }
   },
 
+  computed: {
+    genderClass () {
+      if (!this.user) {
+        return ''
+      }
+
+      if (this.user.gender === 'Female') {
+        return 'fas fa-female'
+      } else {
+
+        return 'fas fa-male'
+      }
+    }
+  },
+
   methods: {
     getTodo () {
       this.axios.get('https://gorest.co.in/public-api/todos/' + this.id).then((response) => {
-        
+
         if (response.data.code !== 200) {
           alert('Erro ao carregar a tarefa!')
           return
@@ -222,15 +254,15 @@ export default {
         completed: this.editDetailTodo.completed
       }
 
-      let headers = { 
-        headers: { 
+      let headers = {
+        headers: {
           Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
         }
       }
 
       this.axios.put(
         'https://gorest.co.in/public-api/todos/' + this.id,
-        apiTodo, 
+        apiTodo,
         headers
       ).then((response) => {
         if (response.data.code === 200) {
