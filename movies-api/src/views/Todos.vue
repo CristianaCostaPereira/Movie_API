@@ -93,7 +93,7 @@ export default {
       pagination: {
         total: null,
         pages: null,
-        page: null,
+        page: 1,
         limit: null
       }
     }
@@ -106,8 +106,9 @@ export default {
   },
 
   methods: {
+    // fecth da minha API
     getTodos () {
-      this.axios.get("https://gorest.co.in/public-api/todos").then((response) => {
+      this.axios.get('https://gorest.co.in/public-api/todos?page=' + this.pagination.page).then((response) => {
         this.todos = response.data.data // Place the answer from our API into our array
       })
     },
