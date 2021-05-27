@@ -28,13 +28,22 @@
           </thead>
 
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
+            <tr v-if="!hasTodos">
+              <td colspan="6">
+                Não existem tarefas criadas
+              </td>
+            </tr>
+
+            <tr
+              v-else
+              v-for="todo in todos"
+              :key="todo.id">
+              <td>{{ todo.id }}</td>
+              <td>{{ todo.user_id }}</td>
+              <td>{{todo.title}}</td>
+              <td>{{todo.completed}}</td>
+              <td>{{todo.completed_at}}</td>
+              <td>{{todo.updated_at}}</td>
             </tr>
           </tbody>
         </table>
@@ -59,6 +68,7 @@ export default {
 
   data () {
     return {
+      // What the API send me
       maintenanceTodo : {
         id: null,
         userId: null,
@@ -73,7 +83,13 @@ export default {
         pages: null,
         page: null,
         limit: null
-      } 
+      }
+    }
+  },
+
+  computed: {
+    hasTodos () {
+      return this.todos.length < 0
     }
   }
 }
