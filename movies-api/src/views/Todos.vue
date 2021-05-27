@@ -70,7 +70,7 @@
     <!-- Listagem de todos -->
     <div class="row mt-4">
       <div class="col-lg-12">
-        <table class="table">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -226,7 +226,7 @@ export default {
     },
 
     removeTodo (todoId) {
-      // delete recives, as second parameter the object headers
+      // delete recives, as second parameter the headers
 
       this.axios.delete('https://gorest.co.in/public-api/todos/' + todoId,
       {
