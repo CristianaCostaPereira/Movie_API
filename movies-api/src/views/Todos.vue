@@ -52,8 +52,8 @@
                   class="fas fa-times text-danger">
                 </i>
               </td>
-              <td>{{ todo.created_at }}</td>
-              <td>{{ todo.updated_at }}</td>
+              <td>{{ formatDate(todo.created_at) }}</td>
+              <td>{{ formatDate(todo.updated_at) }}</td>
             </tr>
           </tbody>
         </table>
@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'Todos',
 
@@ -108,6 +110,12 @@ export default {
       this.axios.get("https://gorest.co.in/public-api/todos").then((response) => {
         this.todos = response.data.data // Place the answer from our API into our array
       })
+    },
+
+    formatDate (date) {
+      var splitedDate = date.split('.')[0]
+
+      return moment(splitedDate, 'YYYY-MM-DDTHH:mm:ss').format('DD/MM/YYYY HH:mm:ss') // O formato da data que a API trás e o formato que quero
     }
   },
 
