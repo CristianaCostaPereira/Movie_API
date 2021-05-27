@@ -64,8 +64,16 @@ export default {
         userId: null,
         title: '',
         completed: false
-      }
+      },
 
+      todos: [],
+
+      pagination: {
+        total: null,
+        pages: null,
+        page: null,
+        limit: null
+      } 
     }
   }
 }
