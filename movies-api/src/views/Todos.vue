@@ -30,6 +30,7 @@
             </h5>
 
             <button
+              @click="resetMaintenanceTodo()"
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
@@ -41,8 +42,9 @@
             <form>
               <div class="form-group mt-4">
                 <label>ID do Utilizador</label>
+
                 <input
-                v-model="maintenanceTodo.userId"
+                  v-model="maintenanceTodo.userId"
                   type="text"
                   class="form-control"
                   placeholder="ID do Utilizador" />
@@ -50,6 +52,7 @@
 
               <div class="form-group mt-4">
                 <label>Descrição</label>
+
                 <input
                   v-model="maintenanceTodo.title"
                   type="text"
@@ -57,23 +60,25 @@
                   placeholder="Descrição" />
               </div>
 
-              <div class="form-group mt-4">
+              <div class="form-check mt-4">
                 <label>Realizada</label>
+
                 <input
-                v-model="maintenanceTodo.completed"
+                  v-model="maintenanceTodo.completed"
                   type="checkbox"
-                  class="form-check.input"
-                  placeholder="Descrição" />
+                  class="form-check-input" />
               </div>
             </form>
           </div>
 
           <div class="modal-footer">
             <button
+              @click="resetMaintenanceTodo()"
               ref="closeBtn"
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal">
+
               Fechar
             </button>
 
@@ -82,14 +87,16 @@
               @click="addTodo()"
               type="button"
               class="btn btn-primary">
+
               Criar Tarefa
             </button>
 
             <button
               v-else
-              @click="addTodo()"
+              @click="editTodo()"
               type="button"
               class="btn btn-primary">
+
               Editar
             </button>
           </div>
@@ -141,13 +148,18 @@
                   class="fas fa-times text-danger">
                 </i>
               </td>
+
               <td>{{ formatDate(todo.created_at) }}</td>
               <td>{{ formatDate(todo.updated_at) }}</td>
+
               <td>
                 <button
                   @click="openEditTodoModal(todo)"
                   type="button"
-                  class="btn btn-outline-primary">
+                  class="btn btn-outline-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#todoModal">
+
                   Editar
                 </button>
               </td>
@@ -157,14 +169,17 @@
                   @click="removeTodo(todo.id)"
                   type="button"
                   class="btn btn-outline-danger">
+
                   Remover
                 </button>
               </td>
+
               <td>
                 <button
                   @click="goToDetails(todo.id)"
                   type="button"
                   class="btn btn-outline-success">
+
                   Detalhes
                 </button>
               </td>
@@ -193,7 +208,7 @@
               class="page-link"
               href="#">
 
-              {{pagination.page}}
+              {{ pagination.page }}
             </a>
           </li>
 
@@ -274,21 +289,25 @@ export default {
 
     addTodo() {
       let apiTodo = {
-        userid: this.maintenanceTodo.userId,
+        user_id: this.maintenanceTodo.userId,
         title: this.maintenanceTodo.title,
         completed: this.maintenanceTodo.completed
       }
 
-      this.axios.delete('https://gorest.co.in/public-api/todos/', apiTodo,
+      this.axios.post('https://gorest.co.in/public-api/todos/',
+      apiTodo,
       {
         headers: {
           Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
         }
       }).then((response) => {
-        if (response.data.code === 200) {
+        if (response.data.code === 201) {
           this.getTodos()
+
+          this.resetMaintenanceTodo()
+
         } else {
-          alert(response.data.data.message)
+          alert('Erro a criar a tarefa!')
         }
       })
     },
@@ -307,14 +326,15 @@ export default {
           Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
         }
       }).then((response) => {
-        if (response.data.code === 201) {
+        if (response.data.code === 200) {
           this.getTodos()
+
+          this.resetMaintenanceTodo()
+
         } else {
-          alert(response.data.data.message)
+          alert('Erro ao editar a tarefa!')
         }
       })
-
-
     },
 
     openEditTodoModal(todo) {
@@ -342,7 +362,6 @@ export default {
       }
 
       this.getTodos()
-
     },
 
     nextPage() {
@@ -351,6 +370,15 @@ export default {
       }
 
       this.getTodos()
+    },
+
+    resetMaintenanceTodo () {
+      this.maintenanceTodo = {
+        id: null,
+        userId: null,
+        title: '',
+        completed: false
+      }
     }
   },
 
