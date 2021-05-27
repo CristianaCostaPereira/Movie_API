@@ -79,6 +79,9 @@
               <th scope="col">Estado</th>
               <th scope="col">Criado a</th>
               <th scope="col">Actualizado a</th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
 
@@ -110,6 +113,31 @@
               </td>
               <td>{{ formatDate(todo.created_at) }}</td>
               <td>{{ formatDate(todo.updated_at) }}</td>
+              <td>
+                <button
+                  @click="editTodo()"
+                  type="button"
+                  class="btn btn-outline-primary">
+                  Editar
+                </button>
+              </td>
+
+              <td>
+                <button
+                  @click="removeTodo(todo.id)"
+                  type="button"
+                  class="btn btn-outline-danger">
+                  Remover
+                </button>
+              </td>
+              <td>
+                <button
+                  @click="addTodo()"
+                  type="button"
+                  class="btn btn-outline-success">
+                  Detalhes
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -194,6 +222,23 @@ export default {
       this.axios.get('https://gorest.co.in/public-api/todos?page=' + this.pagination.page).then((response) => {
         this.todos = response.data.data // Place the answer from our API into our array
         this.pagination = response.data.meta.pagination
+      })
+    },
+
+    removeTodo (todoId) {
+      // delete recives, as second parameter the object headers
+
+      this.axios.delete('https://gorest.co.in/public-api/todos/' + todoId,
+      {
+        headers: {
+          Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
+        }
+      }).then((response) => {
+        if (response.data.code === 204) {
+          this.getTodos()
+        } else {
+          alert(response.data.data.message)
+        }
       })
     },
 
