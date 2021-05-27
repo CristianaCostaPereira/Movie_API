@@ -12,6 +12,61 @@
       </div>
     </div>
 
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="todoModal"
+      tabindex="-1"
+      aria-labelledby="todoModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5
+              class="modal-title">
+              TODO
+            </h5>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close">
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form>
+              <div class="form-group mt-4">
+                <label>Descrição</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  placeholder="Descrição" />
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              ref="closeBtn"
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal">
+              Fechar
+            </button>
+
+            <button
+              @click="addTodo()"
+              type="button"
+              class="btn btn-primary">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Listagem de todos -->
     <div class="row mt-4">
       <div class="col-lg-12">
@@ -38,6 +93,7 @@
               v-else
               v-for="todo in todos"
               :key="todo.id">
+
               <td>{{ todo.id }}</td>
               <td>{{ todo.user_id }}</td>
               <td>{{ todo.title }}</td>
