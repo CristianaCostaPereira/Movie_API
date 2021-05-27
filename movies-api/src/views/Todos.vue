@@ -78,10 +78,19 @@
             </button>
 
             <button
+              v-if="!maintenanceTodo.id"
               @click="addTodo()"
               type="button"
               class="btn btn-primary">
-              Guardar
+              Criar Tarefa
+            </button>
+
+            <button
+              v-else
+              @click="addTodo()"
+              type="button"
+              class="btn btn-primary">
+              Editar
             </button>
           </div>
         </div>
@@ -136,7 +145,7 @@
               <td>{{ formatDate(todo.updated_at) }}</td>
               <td>
                 <button
-                  @click="editTodo()"
+                  @click="openEditTodoModal(todo)"
                   type="button"
                   class="btn btn-outline-primary">
                   Editar
@@ -153,7 +162,7 @@
               </td>
               <td>
                 <button
-                  @click="addTodo()"
+                  @click="goToDetails(todo.id)"
                   type="button"
                   class="btn btn-outline-success">
                   Detalhes
@@ -276,6 +285,28 @@ export default {
           Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
         }
       }).then((response) => {
+        if (response.data.code === 200) {
+          this.getTodos()
+        } else {
+          alert(response.data.data.message)
+        }
+      })
+    },
+
+    editTodo () {
+      let apiTodo = {
+        user_id: this.maintenanceTodo.userId,
+        title: this.maintenanceTodo.title,
+        completed: this.maintenanceTodo.completed
+      }
+
+      this.axios.put('https://gorest.co.in/public-api/todos/' + this.maintenanceTodo.id,
+      apiTodo,
+      {
+        headers: {
+          Authorization: 'Bearer 19cba85ee0aae784b1ebd27da60e9fda8750deaa140b5da0411cbcefc2f2a2c3'
+        }
+      }).then((response) => {
         if (response.data.code === 201) {
           this.getTodos()
         } else {
@@ -283,6 +314,20 @@ export default {
         }
       })
 
+
+    },
+
+    openEditTodoModal(todo) {
+      this.maintenanceTodo = {
+        id: todo.id,
+        userId: todo.user_id,
+        title: todo.title,
+        completed: todo.completed
+      }
+    },
+
+    goToDetails (todoId) {
+      this.$router.push('/todos/' + todoId)
     },
 
     formatDate (date) {
