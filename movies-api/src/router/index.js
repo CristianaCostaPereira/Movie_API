@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Movies from '../components/Movies.vue'
 
 Vue.use(VueRouter)
 
@@ -8,8 +8,8 @@ const routes = [
   {
     // componente carregado por todo
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Movies',
+    component: Movies
   },
   {
     // componente carregado quando é navegado para esta rota
