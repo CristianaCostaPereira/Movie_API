@@ -20,7 +20,7 @@
           </thead>
 
           <tbody>
-            <!-- To access to my user with value null only after we have a todo -->
+            <!-- To access to my user with value null only after we have a todo. Because my HTML runs first than my API -->
             <!-- What prevents me for getting error of null -->
             <!-- Super important -->
             <tr v-if="todo">
