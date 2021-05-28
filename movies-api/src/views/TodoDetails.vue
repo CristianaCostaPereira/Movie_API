@@ -189,7 +189,7 @@ export default {
     return {
       id: this.$route.params.todoId,
       todo: null, // What we get from the server
-      user: null,
+      user: null, // What we get from the server about the user
 
       editDetailTodo: {
         userId: null,
@@ -315,8 +315,6 @@ export default {
         }
       })
     }
-
-
   },
 
   created () {
