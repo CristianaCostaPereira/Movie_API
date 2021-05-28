@@ -20,6 +20,9 @@
           </thead>
 
           <tbody>
+            <!-- To access to my user with value null only after we have a todo -->
+            <!-- What prevents me for getting error of null -->
+            <!-- Super important -->
             <tr v-if="todo">
               <td class="align-middle">{{ todo.id }}</td>
               <td class="align-middle">{{ todo.user_id }}</td>

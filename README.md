@@ -1,5 +1,7 @@
 # movies-api
 
+Project for ITGest Academy
+
 ## Project setup
 ```
 npm install
