@@ -255,7 +255,7 @@ export default {
         }
 
         this.todo = response.data.data // get the answer from our API and replace the null value into the todo info
-        this.getUser(response.data.data.user_id) // What the server give us about the user info
+        this.getUser(response.data.data.user_id) // Its only 'draw' after I get my todo first. What the server give us about the user info
       })
     },
 
