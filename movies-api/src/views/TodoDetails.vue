@@ -73,26 +73,32 @@
 
         <div class="card-body">
           <div>
-            {{ user.id }} - {{ user.name }}
+            <h3 class="mb-3">
+              User Detail Information
+            </h3>
+          </div>
+
+          <div>
+            <b>User:</b> {{ user.id }} - {{ user.name }}
 
             <i :class="genderClass"></i>
           </div>
 
           <div>
-            {{ user.email }}
+            <b>Email:</b> {{ user.email }}
           </div>
 
           <div>
-            Criado a: {{ formatDate(user.created_at) }}
+            <b>Criado a:</b> {{ formatDate(user.created_at) }}
           </div>
 
 
           <div>
-            Actualizado a: {{ formatDate(user.updated_at) }}
+            <b>Actualizado a:</b> {{ formatDate(user.updated_at) }}
           </div>
 
           <div>
-            Status: <span :style="statusStyle">{{ user.status }}</span>
+            <b>Status:</b> <span :style="statusStyle">{{ user.status }}</span>
           </div>
         </div>
       </div>
@@ -224,7 +230,10 @@ export default {
 
       if (this.user.status === 'Active') {
         styleObject.color = '#3ab73a'
-
+        
+      } else if (this.user.status === 'Inactive') {
+        styleObject.color = '#d4c8c8'
+        
       } else {
         styleObject = styleObject.color = '#ff4040'
       }
