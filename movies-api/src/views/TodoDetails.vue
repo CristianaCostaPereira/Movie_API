@@ -230,10 +230,10 @@ export default {
 
       if (this.user.status === 'Active') {
         styleObject.color = '#3ab73a'
-        
+
       } else if (this.user.status === 'Inactive') {
         styleObject.color = '#d4c8c8'
-        
+
       } else {
         styleObject = styleObject.color = '#ff4040'
       }
@@ -250,8 +250,9 @@ export default {
           alert('Erro ao carregar a tarefa!')
           return
         }
-        this.todo = response.data.data
-        this.getUser(response.data.data.user_id)
+
+        this.todo = response.data.data // get the answer from our API and replace the null value into the todo info
+        this.getUser(response.data.data.user_id) // What the server give us about the user info
       })
     },
 
@@ -270,6 +271,7 @@ export default {
       if (!date) {
         return
       }
+
       var splitedDate = date.split('.')[0]
 
       return moment(splitedDate, 'YYYY-MM-DDTHH:mm:ss').format('DD/MM/YYYY HH:mm:ss') // O formato da data que a API trás e o formato que quero
@@ -295,6 +297,7 @@ export default {
       ).then((response) => {
         if (response.data.code === 200) {
           this.getTodo()
+
         } else {
           alert('Erro ao editar a tarefa!')
         }
