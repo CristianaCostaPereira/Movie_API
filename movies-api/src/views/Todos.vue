@@ -383,6 +383,7 @@ export default {
   },
 
   created () {
+    document.body.style.backgroundImage = ""
     this.getTodos()
   }
 }

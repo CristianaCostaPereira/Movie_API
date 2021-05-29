@@ -17,7 +17,7 @@
       </span>
     </div>
 
-    <!-- <div
+    <div
       class="row"
       v-if="!movieDetails">
       <div class="col-sm-12 mt-5">
@@ -29,26 +29,54 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div class="row"
       v-if="movieDetails">
       <div class="col-sm-12 mt-5">
         <div class="card">
           <div class="row card-body">
-            <img class="col-sm-4" :src="movieDetails.Poster" alt="sans"/>
+            <img class="col-xs-12 col-lg-4" :src="movieDetails.Poster" alt="sans"/>
 
-            <div class="col-sm-8">
+            <div class="col-xs-12 col-lg-8">
               <h1 class="card-title">{{ movieDetails.Title }}</h1>
 
-              <h5 class="card-text mt-4">{{ movieDetails.Plot }}</h5>
-              <div class="card-text">{{ movieDetails.Year }}</div>
-              <div class="card-text">{{ movieDetails.Runtime }}</div>
-              <div class="card-text">{{ movieDetails.Genre }}</div>
-              <div class="card-text">{{ movieDetails.Director }}</div>
-              <div class="card-text">{{ movieDetails.Actors }}</div>
-              <div class="card-text">{{ movieDetails.Awards }}</div>
-              <div class="card-text">{{ movieDetails.BoxOffice }}</div>
+              <h5 class="card-text plot mt-4 mb-4">{{ movieDetails.Plot }}</h5>
+
+              <div class="card-text">
+                <label>Year: </label>
+                {{ movieDetails.Year }}
+              </div>
+
+              <div class="card-text">
+                <label>Runtime: </label>
+                {{ movieDetails.Runtime }}
+              </div>
+
+              <div class="card-text">
+                <label>Genre: </label>
+                {{ movieDetails.Genre }}
+              </div>
+
+              <div class="card-text">
+                <label>Director: </label>
+                {{ movieDetails.Director }}
+              </div>
+
+              <div class="card-text">
+                <label>Actors: </label>
+                {{ movieDetails.Actors }}
+              </div>
+
+              <div class="card-text">
+                <label>Awards: </label>
+                {{ movieDetails.Awards }}
+              </div>
+              
+              <div class="card-text mb-4">
+                <label>BoxOffice: </label>
+                {{ movieDetails.BoxOffice }}
+              </div>
 
               <div class="row">
                 <div class="col-sm-4 score-cards"
@@ -65,7 +93,6 @@
 
                       <span class="icon">{{ rating.Value }}</span>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -112,21 +139,14 @@ export default {
   },
 
   created () {
-    this.searchInput = 'jumanji'
-    this.getMovieDetails()
+    document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80')"
   }
 }
 </script>
 
 <style>
-  body {
-    background-image: url('https://images.unsplash.com/photo-1562329265-95a6d7a83440?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=964&q=80');
-    background-repeat: no-repeat;
-    background-size: 100%;
-  }
-
-  .form-control::placeholder {
-    color: #bebcbc;
+  input.form-control::placeholder {
+    color: #bebcbca9;
   }
 
   .welcome-card {
@@ -135,6 +155,11 @@ export default {
 
   h1.card-title {
     font-size: 4.5rem;
+  }
+
+  h5.plot {
+    text-align: justify;
+    padding: 0px 20px 0px 20px
   }
 
   .score-cards {
@@ -154,6 +179,10 @@ export default {
     border-radius: 10%;
   }
 
+  label {
+    font-weight: 700;
+  }
+
   .icon {
     font-weight: 700;
     padding-left: 5px;
@@ -161,7 +190,6 @@ export default {
 
   .imdb-button {
     width: 100%;
-    color: red;
   }
   .imdb-button:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
