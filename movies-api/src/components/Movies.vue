@@ -41,21 +41,14 @@
             <div class="col-sm-8">
               <h1 class="card-title">{{ movieDetails.Title }}</h1>
 
-              <h6 class="card-text mt-4">{{ movieDetails.Plot }}</h6>
+              <h5 class="card-text mt-4">{{ movieDetails.Plot }}</h5>
               <div class="card-text">{{ movieDetails.Year }}</div>
               <div class="card-text">{{ movieDetails.Runtime }}</div>
-              <div class="card-text">{{ movieDetails.Released }}</div>
               <div class="card-text">{{ movieDetails.Genre }}</div>
               <div class="card-text">{{ movieDetails.Director }}</div>
-              <div class="card-text">{{ movieDetails.Writer }}</div>
               <div class="card-text">{{ movieDetails.Actors }}</div>
-              <div class="card-text">{{ movieDetails.Language }}</div>
-              <div class="card-text">{{ movieDetails.Country }}</div>
               <div class="card-text">{{ movieDetails.Awards }}</div>
               <div class="card-text">{{ movieDetails.BoxOffice }}</div>
-              <div class="card-text">{{ movieDetails.Production }}</div>
-              <div class="card-text">{{ movieDetails.Awards }}</div>
-              <div class="card-text">{{ movieDetails.imdbID }}</div>
 
               <div class="row">
                 <div class="col-sm-4 score-cards"
@@ -63,12 +56,14 @@
                   :key="index">
 
                   <div class="score-class">
-                    <span>{{ rating.Source }}</span>
+                    <span><b>{{ rating.Source }}</b></span>
 
                     <div>
                       <span v-if="rating.Source === 'Rotten Tomatoes'">🍅</span>
+                      <span v-else-if="rating.Source === 'Internet Movie Database'"><i class="fab fa-imdb"></i></span>
+                      <span v-else>🎬</span>
 
-                      {{ rating.Value }}
+                      <span class="icon">{{ rating.Value }}</span>
                     </div>
 
                   </div>
@@ -76,7 +71,7 @@
               </div>
 
               <div class="card-body">
-                <a :href="`https://www.imdb.com/title/${movieDetails.imdbID}`" target="_blank" class="btn btn-primary ml-3">Go to IMDB</a>
+                <a :href="`https://www.imdb.com/title/${movieDetails.imdbID}`" target="_blank" class="btn btn-outline-warning imdb-button ml-3">Go to IMDB</a>
               </div>
             </div>
           </div>
@@ -111,8 +106,6 @@ export default {
 
         } else {
           this.movieDetails = response.data
-
-          // this.searchInput = ''
         }
       })
     }
@@ -140,6 +133,10 @@ export default {
     font-size: 50px;
   }
 
+  h1.card-title {
+    font-size: 4.5rem;
+  }
+
   .score-cards {
     display: flex;
     justify-content: space-evenly;
@@ -149,11 +146,24 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    background-color: rgba(255, 255, 0, 0.733);
-    border: 2px solid rgb(255, 255, 21);
+    background-color: #e9c51edb;
+    border: 2px solid #9a6c6454;
     padding: 10px;
-    width: 200px;
+    width: 230px;
     height: 100px;
     border-radius: 10%;
+  }
+
+  .icon {
+    font-weight: 700;
+    padding-left: 5px;
+  }
+
+  .imdb-button {
+    width: 100%;
+    color: red;
+  }
+  .imdb-button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   }
 </style>
