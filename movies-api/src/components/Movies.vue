@@ -13,13 +13,39 @@
         <i class="fas fa-search"></i>
       </span>
     </div>
+
+    <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="row card-body">
+                      <img class="col-sm-4" src="https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg" alt="sans"/>
+                      <div class="col-sm-8">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                          <ul class="list-group list-group-flush">
+                          <li class="list-group-item">An item</li>
+                          <li class="list-group-item">A second item</li>
+                          <li class="list-group-item">A third item</li>
+                        </ul>
+                      </div>
+
+                      <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  
+
 }
 </script>
 
@@ -29,7 +55,7 @@ export default {
     background-repeat: no-repeat;
     background-size: 100%;
   }
-  
+
   .form-control::placeholder {
     color: #bebcbc;
   }
