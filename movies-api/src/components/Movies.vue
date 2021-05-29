@@ -17,6 +17,20 @@
       </span>
     </div>
 
+    <!-- <div
+      class="row"
+      v-if="!movieDetails">
+      <div class="col-sm-12 mt-5">
+        <div class="card">
+          <div class="row card-body welcome-card">
+            <div class="col-sm-12">
+              <p class="card-text">Welcome 🍿</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <div class="row"
       v-if="movieDetails">
       <div class="col-sm-12 mt-5">
@@ -25,18 +39,46 @@
             <img class="col-sm-4" :src="movieDetails.Poster" alt="sans"/>
 
             <div class="col-sm-8">
-              <h5 class="card-title">Card title</h5>
+              <h1 class="card-title">{{ movieDetails.Title }}</h1>
 
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <h6 class="card-text mt-4">{{ movieDetails.Plot }}</h6>
+              <div class="card-text">{{ movieDetails.Year }}</div>
+              <div class="card-text">{{ movieDetails.Runtime }}</div>
+              <div class="card-text">{{ movieDetails.Released }}</div>
+              <div class="card-text">{{ movieDetails.Genre }}</div>
+              <div class="card-text">{{ movieDetails.Director }}</div>
+              <div class="card-text">{{ movieDetails.Writer }}</div>
+              <div class="card-text">{{ movieDetails.Actors }}</div>
+              <div class="card-text">{{ movieDetails.Language }}</div>
+              <div class="card-text">{{ movieDetails.Country }}</div>
+              <div class="card-text">{{ movieDetails.Awards }}</div>
+              <div class="card-text">{{ movieDetails.BoxOffice }}</div>
+              <div class="card-text">{{ movieDetails.Production }}</div>
+              <div class="card-text">{{ movieDetails.Awards }}</div>
+              <div class="card-text">{{ movieDetails.imdbID }}</div>
 
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-              </ul>
+              <div class="row">
+                <div class="col-sm-4 score-cards"
+                  v-for="(rating, index) in movieDetails.Ratings"
+                  :key="index">
+
+                  <div class="score-class">
+                    <span>{{ rating.Source }}</span>
+
+                    <div>
+                      <span v-if="rating.Source === 'Rotten Tomatoes'">🍅</span>
+
+                      {{ rating.Value }}
+                    </div>
+
+                  </div>
+                </div>
+              </div>
 
               <div class="card-body">
                 <a href="#" class="btn btn-primary ml-3">Go to IMDB</a>
+
+                <!-- <a href="https://www.w3schools.com/" target="_blank">Visit W3Schools.com!</a> -->
               </div>
             </div>
           </div>
@@ -47,7 +89,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Movies',
 
@@ -72,11 +113,17 @@ export default {
 
         } else {
           this.movieDetails = response.data
+
+          // this.searchInput = ''
         }
       })
     }
-  }
+  },
 
+  created () {
+    this.searchInput = 'jumanji'
+    this.getMovieDetails()
+  }
 }
 </script>
 
@@ -89,5 +136,26 @@ export default {
 
   .form-control::placeholder {
     color: #bebcbc;
+  }
+
+  .welcome-card {
+    font-size: 50px;
+  }
+
+  .score-cards {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .score-class {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: rgba(255, 255, 0, 0.733);
+    border: 2px solid rgb(255, 255, 21);
+    padding: 10px;
+    width: 200px;
+    height: 100px;
+    border-radius: 10%;
   }
 </style>
