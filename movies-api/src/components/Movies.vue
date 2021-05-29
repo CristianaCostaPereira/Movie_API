@@ -76,9 +76,7 @@
               </div>
 
               <div class="card-body">
-                <a href="#" class="btn btn-primary ml-3">Go to IMDB</a>
-
-                <!-- <a href="https://www.w3schools.com/" target="_blank">Visit W3Schools.com!</a> -->
+                <a :href="`https://www.imdb.com/title/${movieDetails.imdbID}`" target="_blank" class="btn btn-primary ml-3">Go to IMDB</a>
               </div>
             </div>
           </div>
