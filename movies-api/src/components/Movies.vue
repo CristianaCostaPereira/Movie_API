@@ -4,27 +4,30 @@
       <input
         type="text"
         class="form-control"
-        placeholder="Movie Title">
+        placeholder="Movie Title"
+        v-model="searchInput"
+        @keyup.enter="getMovieDetails()">
 
       <span
         class="input-group-text"
-        id="addon-wrapping">
+        id="addon-wrapping"
+        @click="getMovieDetails()">
 
         <i class="fas fa-search"></i>
       </span>
     </div>
 
-    <div class="row">
+    <div class="row"
+      v-if="movieDetails">
       <div class="col-sm-12 mt-5">
         <div class="card">
           <div class="row card-body">
-            <img class="col-sm-4" src="https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg" alt="sans"/>
+            <img class="col-sm-4" :src="movieDetails.Poster" alt="sans"/>
 
             <div class="col-sm-8">
               <h5 class="card-title">Card title</h5>
 
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
 
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">An item</li>
@@ -32,11 +35,9 @@
                 <li class="list-group-item">A third item</li>
               </ul>
 
-            </div>
-
-            <div class="card-body">
-              <a href="#" class="card-link me-3">Card link</a>
-              <a href="#" class="btn btn-primary ml-3">Go to IMDB</a>
+              <div class="card-body">
+                <a href="#" class="btn btn-primary ml-3">Go to IMDB</a>
+              </div>
             </div>
           </div>
         </div>
@@ -48,6 +49,33 @@
 <script>
 
 export default {
+  name: 'Movies',
+
+  data () {
+    return {
+      // Don't need to create the object because the API returns all the info in one single JSON object
+      movieDetails: null,
+
+      searchInput: '',
+
+      apiKey: '750e29ba'
+    }
+  },
+
+  methods: {
+    getMovieDetails () {
+      this.axios.get(`http://www.omdbapi.com/?t=${this.searchInput}&apikey=${this.apiKey}`).then((response) => {
+        if (response.data.Error) {
+          alert(response.data.Error)
+
+          this.movieDetails = null
+
+        } else {
+          this.movieDetails = response.data
+        }
+      })
+    }
+  }
 
 }
 </script>
